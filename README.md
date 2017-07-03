@@ -15,6 +15,12 @@ The script utilizes pacaur but doesn't require anything else.
 
 Just add the script to your path and type `pacup`.
 
+## TODO
+* Check if user is root
+* Make logging a bit more elegant 
+* Add a log cleaning function that can be triggered with a flag
+* maybe something else
+
 ## Lisence: MIT
 
 Copyright 2017 Colby Eckert
