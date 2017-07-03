@@ -1,0 +1,92 @@
+#     ____     ___       ______   __  __   ____     
+#    / __ \   /   |     / ____/  / / / /  / __ \    
+#   / /_/ /  / /| |    / /      / / / /  / /_/ /    
+#  / ____/  / ___ |   / /___   / /_/ /  / ____/     
+# /_/      /_/  |_|   \____/   \____/  /_/          
+#
+#     ..:: Pacman & Pacaur update script ::..
+#    ..:: Intended for Arch Linux Systems ::..
+
+# Lisenced: MIT
+#
+# Copyrigiht 2017 Colby Eckert
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy 
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights 
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+# copies of the Software, and to permit persons to whom the Software is 
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in 
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+# THE SOFTWARE.
+#
+
+#!/bin/bash
+
+echo " "
+echo "..:: P A C U P ::.."
+echo " "
+
+#setup
+DATE=`date +%Y-%m-%d`
+LOGDIR="$HOME/.local/share/pacup"
+
+if [ ! -d $LOGDIR ]; then
+	echo ":: creating logfile directory..."
+	echo -e "\t $LOGDIR\n"
+	mkdir -p $LOGDIR
+fi
+
+#clear cache?
+while true; do
+	read -p ":: clear cached packages? " YN
+	case $YN in
+		[Yy]* ) pacaur -Scc --noconfirm; break;;
+		[Nn]* ) break;;
+		* ) echo ":: please answer yes or no.";;
+	esac
+done
+
+echo " "
+
+# does a full update
+echo ":: updating system..."
+pacaur -Syu --noconfirm --noedit
+echo " "
+echo ":: update complete..."
+echo " "
+
+
+findOrphans() {
+	echo ":: checking for orphans..."
+	ORPHANS=`pacman -Qqdt`
+	if [ -z "$ORPHANS" ]; then
+		echo ":: system is clean, exiting..."
+		sleep 1s
+		exit
+	else
+		echo -e ":: orphans found: \n\n\t$ORPHANS\n"
+		echo ":: writing to logfile..."
+		echo -e "Orphans Found on $DATE:\n\n$ORPHANS" >> $LOGDIR/$DATE.pacup
+		echo ":: removing orphans..."
+		pacaur -Rnscd $ORPHANS
+		exit
+	fi
+}
+
+while [ 1 ]; do
+	findOrphans
+done
+
+echo ":: ** update script did not exit normally!"
+sleep 2s
+exit
