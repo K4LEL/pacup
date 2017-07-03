@@ -19,7 +19,8 @@ Just add the script to your path and type `pacup`.
 * Check if user is root
 * Make logging a bit more elegant 
 * Add a log cleaning function that can be triggered with a flag
-* maybe something else
+* Create a custom logo
+* Maybe something else
 
 ## Lisence: MIT
 
