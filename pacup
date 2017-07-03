@@ -79,11 +79,10 @@ findOrphans() {
 		echo -e "Orphans Found on $DATE:\n\n$ORPHANS" >> $LOGDIR/$DATE.pacup
 		echo ":: removing orphans..."
 		pacaur -Rnscd $ORPHANS
-		exit
 	fi
 }
 
-while [ 1 ]; do
+while true; do
 	findOrphans
 done
 
