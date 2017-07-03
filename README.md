@@ -1,21 +1,21 @@
 
 ![logo](logo.png)
 
-#PACUP
+# PACUP
 
 Does exactly what you'd think it does. Updates normal repos and AUR, Clears caches, and removes orphans.
 
 An updated and revised version of [Tahlwyn's Arch Update Script](https://github.com/Tahlwyn/Arch-Update-Script).
 
-##Dependencies
+## Dependencies
 
 The script utilizes pacaur but doesn't require anything else.
 
-##Usage
+## Usage
 
 Just add the script to your path and type `pacup`.
 
-##Lisence: MIT
+## Lisence: MIT
 
 Copyright 2017 Colby Eckert
 
